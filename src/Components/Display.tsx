@@ -21,14 +21,15 @@ const Display = () => {
       el.style.background = "#121212";
     }
   }, [isAlbum, bgColor, location.pathname]);
+  console.log('first')
   return (
     <div
       ref={displayRef}
       className="w-[100%] h-max-[90%] lg:w-[75%] m-2 lg:ml-0 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto"
     >
       <Routes>
-        <Route path="/" element={<DisplayHome />} />
-        <Route path="/album/:id" element={<DisplayAlbum />} />
+        <Route path="/music-player/" element={<DisplayHome />} />
+        <Route path="/music-player/album/:id" element={<DisplayAlbum />} />
       </Routes>
     </div>
   );
