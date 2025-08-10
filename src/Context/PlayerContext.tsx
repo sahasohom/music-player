@@ -1,14 +1,18 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { songsData } from "../assets/assets";
 import type { songsType } from "../Type/Types";
 import type { PlayerContextType } from "../Type/PlayerContextType";
 
 export const PlayerContext = createContext<PlayerContextType | null>(null);
 
-const PlayerContextProvider = (props: PlayerContextType) => {
+type PlayerContextProviderProps = {
+  children: ReactNode;
+};
+
+const PlayerContextProvider = ({ children }: PlayerContextProviderProps) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const seekBg = useRef(null);
-  const seekBar = useRef(null);
+  const seekBg = useRef<HTMLDivElement | null>(null);
+  const seekBar = useRef<HTMLDivElement | null>(null);
 
   const [track, setTrack] = useState<songsType>(songsData[0]);
   const [playStatus, setPlayStatus] = useState<boolean>(false);
@@ -95,7 +99,7 @@ const PlayerContextProvider = (props: PlayerContextType) => {
   };
 
   const seekSong = (e: { nativeEvent: { offsetX: number } }) => {
-    if (audioRef.current) {
+    if (audioRef.current && seekBg.current) {
       audioRef.current.currentTime =
         (e.nativeEvent.offsetX / seekBg.current.offsetWidth) *
         audioRef.current?.duration;
@@ -111,8 +115,10 @@ const PlayerContextProvider = (props: PlayerContextType) => {
           const current = audioRef.current.currentTime;
           const duration = audioRef.current.duration || 0;
 
-          seekBar.current.style.width =
-            Math.floor((current / duration) * 100) + "%";
+          if (seekBar.current) {
+            seekBar.current.style.width =
+              Math.floor((current / duration) * 100) + "%";
+          }
 
           setTime({
             currentTime: {
@@ -131,10 +137,9 @@ const PlayerContextProvider = (props: PlayerContextType) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const contextValue = {
+  const contextValue: PlayerContextType = {
     isFirstSong,
     isLastSong,
-    totalSongs,
     audioRef,
     seekBg,
     seekBar,
@@ -159,7 +164,7 @@ const PlayerContextProvider = (props: PlayerContextType) => {
   };
   return (
     <PlayerContext.Provider value={contextValue}>
-      {props.children}
+      {children}
     </PlayerContext.Provider>
   );
 };

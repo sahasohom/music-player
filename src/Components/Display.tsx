@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { albumsData } from "../assets/assets";
 
 const Display = () => {
-  const displayRef = useRef(null);
+  const displayRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const isAlbum = location.pathname.includes("album");
   const albumId = isAlbum ? location.pathname.split("/").pop() : "";

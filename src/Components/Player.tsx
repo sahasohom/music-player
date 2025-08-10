@@ -105,7 +105,7 @@ const Player = () => {
             onClick={seekSong}
             className="w-[60vw] max-w-[500px] bg-[#DCDCDC] rounded-full cursor-pointer"
           >
-            <hr
+            <div
               ref={seekBar}
               className="h-1 border-none w-10 bg-green-800 rounded-full"
             />

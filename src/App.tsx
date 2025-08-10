@@ -29,7 +29,7 @@ const App = () => {
         ref={audioRef}
         src={track.file}
         preload="auto"
-        onEnded={shuffle ? shuffleArray : handleSongEnd}
+        onEnded={() => shuffle ? shuffleArray() : handleSongEnd()}
       ></audio>
     </div>
   );

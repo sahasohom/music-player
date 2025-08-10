@@ -9,8 +9,12 @@ const DisplayAlbum = () => {
   const numericId = Number(id);
   const albumData = !isNaN(numericId) ? albumsData[numericId] : undefined;
 
-  const { playWithId } = useContext(PlayerContext);
+  const context = useContext(PlayerContext);
 
+  if (!context) {
+    throw new Error("PlayerContext is not available");
+  }
+  const { playWithId } = context;
   return (
     <>
       <Navbar />

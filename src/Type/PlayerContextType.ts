@@ -15,9 +15,9 @@ export interface TimeType {
 export interface PlayerContextType {
   isFirstSong: boolean;
   isLastSong: boolean;
-  audioRef: RefObject<HTMLAudioElement>;
-  seekBg: RefObject<HTMLDivElement>;
-  seekBar: RefObject<HTMLDivElement>;
+  audioRef: RefObject<HTMLAudioElement | null>;
+  seekBg: RefObject<HTMLDivElement | null>;
+  seekBar: RefObject<HTMLDivElement | null>;
 
   track: songsType;
   setTrack: Dispatch<SetStateAction<songsType>>;
@@ -38,7 +38,7 @@ export interface PlayerContextType {
   setLoop: (data: boolean) => void;
   shuffle: boolean;
   setShuffle: (data: boolean) => void;
-  shuffleArray: (data: songsType) => void;
+  shuffleArray: () => void;
   handleSongEnd: () => void;
 
   seekSong: (e: { nativeEvent: { offsetX: number } }) => void;

@@ -4,7 +4,13 @@ import { PlayerContext } from "../Context/PlayerContext";
 
 type SongItemPropType = songsType;
 const SongItem = ({ name, image, desc, id }: SongItemPropType) => {
-  const { playWithId } = useContext(PlayerContext);
+
+  const context = useContext(PlayerContext);
+
+  if (!context) {
+    throw new Error("PlayerContext is not available");
+  }
+  const { playWithId } = context;
 
   return (
     <div
